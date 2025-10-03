@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TradeBot Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#0a2743",
+              "background-light": "#f6f7f8",
+              "background-dark": "#111921",
+            },
+            fontFamily: {
+              display: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="flex min-h-screen">
+<aside class="w-64 bg-background-light dark:bg-background-dark border-r border-gray-200 dark:border-gray-700 flex flex-col sticky top-0 h-screen">
+<div class="flex items-center gap-2 p-4 border-b border-gray-200 dark:border-gray-700">
+<div class="text-primary size-8">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764ZM4.95178 32.7688L21.4543 6.30267C22.6288 4.4191 25.3712 4.41909 26.5457 6.30267L43.0534 32.777C43.0709 32.8052 43.0878 32.8338 43.104 32.8629L41.3563 33.8352C43.104 32.8629 43.1038 32.8626 43.104 32.8629L43.1051 32.865L43.1065 32.8675L43.1101 32.8739L43.1199 32.8918C43.1276 32.906 43.1377 32.9246 43.1497 32.9473C43.1738 32.9925 43.2062 33.0545 43.244 33.1299C43.319 33.2792 43.4196 33.489 43.5217 33.7317C43.6901 34.1321 44 34.9311 44 35.7391C44 37.4427 43.003 38.7775 41.8558 39.7209C40.6947 40.6757 39.1354 41.4464 37.385 42.0552C33.8654 43.2794 29.133 44 24 44C18.867 44 14.1346 43.2794 10.615 42.0552C8.86463 41.4464 7.30529 40.6757 6.14419 39.7209C4.99695 38.7775 3.99999 37.4427 3.99999 35.7391C3.99999 34.8725 4.29264 34.0922 4.49321 33.6393C4.60375 33.3898 4.71348 33.1804 4.79687 33.0311C4.83898 32.9556 4.87547 32.8935 4.9035 32.8471C4.91754 32.8238 4.92954 32.8043 4.93916 32.7889L4.94662 32.777L4.95178 32.7688ZM35.9868 29.004L24 9.77997L12.0131 29.004C12.4661 28.8609 12.9179 28.7342 13.3617 28.6282C16.4281 27.8961 20.0901 27.4783 24 27.4783C27.9099 27.4783 31.5719 27.8961 34.6383 28.6282C35.082 28.7342 35.5339 28.8609 35.9868 29.004Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h1 class="text-xl font-bold text-gray-900 dark:text-white">TradeBot</h1>
+</div>
+<nav class="flex-1 px-2 py-4 space-y-2">
+<a class="flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary dark:bg-primary/20" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+            Dashboard
+          </a>
+<a class="flex items-center px-4 py-2 text-sm font-medium rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined mr-3">smart_toy</span>
+            Bots
+          </a>
+<a class="flex items-center px-4 py-2 text-sm font-medium rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined mr-3">storefront</span>
+            Marketplace
+          </a>
+<a class="flex items-center px-4 py-2 text-sm font-medium rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined mr-3">pie_chart</span>
+            Portfolio
+          </a>
+<a class="flex items-center px-4 py-2 text-sm font-medium rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined mr-3">history</span>
+            History
+          </a>
+</nav>
+<div class="px-4 pb-4">
+<h3 class="px-2 pb-2 text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Risk Metrics</h3>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="font-medium text-gray-700 dark:text-gray-300">Risk Score</span>
+<span class="text-gray-500 dark:text-gray-400">60%</span>
+</div>
+<div class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700">
+<div class="bg-primary h-1.5 rounded-full" style="width: 60%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="font-medium text-gray-700 dark:text-gray-300">Drawdown</span>
+<span class="text-gray-500 dark:text-gray-400">30%</span>
+</div>
+<div class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700">
+<div class="bg-primary h-1.5 rounded-full" style="width: 30%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="font-medium text-gray-700 dark:text-gray-300">Volatility</span>
+<span class="text-gray-500 dark:text-gray-400">80%</span>
+</div>
+<div class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700">
+<div class="bg-primary h-1.5 rounded-full" style="width: 80%"></div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col">
+<header class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+<h2 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h2>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCu73t9LuBEn1ZVeRybkW-U691bAyPlGdZehDk8hqDfM-D9bl7ODG7bP08kjlbBGzmKiSpgLjQt8u0JcHx6t2Cnjm5esujEguM-muwHajow7FCBMs4vDmtsYepw3fXU7wQnAlc79EOUaJfWdQM3q_SJIl9-vEI8OBxDf9paxBHzR7NeszubtGG-Nk4zsvcbmlOwQl49nK8dp_fe25NyqBJsqF6NlilW2BHBAOnVtBZ4erADtHVFAkJeC7a8xYQJv34WaUCbwhlVuKHo");'></div>
+</div>
+</header>
+<div class="flex-1 p-6">
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-6">
+<div class="bg-white dark:bg-gray-800/50 p-4 rounded-lg flex items-center justify-between">
+<div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Portfolio Value</p>
+<p class="text-2xl font-bold text-gray-900 dark:text-white">$1,234,567</p>
+</div>
+<div class="text-green-500">
+<span class="material-symbols-outlined text-4xl">trending_up</span>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-800/50 p-4 rounded-lg flex items-center justify-between">
+<div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Current ROI</p>
+<p class="text-2xl font-bold text-gray-900 dark:text-white">15.2%</p>
+</div>
+<div class="text-green-500">
+<span class="material-symbols-outlined text-4xl">savings</span>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-800/50 p-4 rounded-lg flex items-center justify-between">
+<div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Active Trades</p>
+<p class="text-2xl font-bold text-gray-900 dark:text-white">25</p>
+</div>
+<div class="text-blue-500">
+<span class="material-symbols-outlined text-4xl">sync</span>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-800/50 p-4 rounded-lg flex items-center justify-between">
+<div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Daily P&amp;L</p>
+<p class="text-2xl font-bold text-green-600 dark:text-green-500">+$5,000</p>
+</div>
+<div class="text-green-500">
+<span class="material-symbols-outlined text-4xl">price_check</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 mb-6">
+<button class="bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded-lg flex items-center gap-2">
+<span class="material-symbols-outlined">play_arrow</span>
+                Start All Bots
+            </button>
+<button class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg flex items-center gap-2">
+<span class="material-symbols-outlined">stop_circle</span>
+                Emergency Stop
+            </button>
+</div>
+<div class="bg-white dark:bg-gray-800/50 rounded-lg">
+<div class="border-b border-gray-200 dark:border-gray-700">
+<nav aria-label="Tabs" class="flex space-x-2">
+<a class="px-3 py-2 font-medium text-sm rounded-t-lg text-primary border-b-2 border-primary" href="#">Portfolio Performance</a>
+<a class="px-3 py-2 font-medium text-sm rounded-t-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 border-b-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600" href="#">Bot Performance</a>
+</nav>
+</div>
+<div class="p-6">
+<div class="flex flex-col md:flex-row gap-6">
+<div class="flex-1">
+<p class="text-base font-medium text-gray-500 dark:text-gray-400">Equity Curve</p>
+<p class="text-4xl font-bold text-gray-900 dark:text-white">$1,234,567</p>
+<div class="flex items-center gap-2 text-sm mt-1">
+<p class="text-gray-500 dark:text-gray-400">Last 30 Days</p>
+<p class="text-green-600 dark:text-green-500 font-medium">+5.2%</p>
+</div>
+<div class="h-64 mt-4">
+<svg fill="none" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="-3 0 478 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="5%" stop-color="#0a2743" stop-opacity="0.4"></stop>
+<stop offset="95%" stop-color="#0a2743" stop-opacity="0"></stop>
+</linearGradient>
+</defs>
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V150H0V109Z" fill="url(#chartGradient)"></path>
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="#0a2743" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+</div>
+</div>
+<div class="w-full md:w-56 space-y-4">
+<h3 class="text-lg font-semibold text-gray-900 dark:text-white">Quick Actions</h3>
+<button class="w-full bg-primary/10 dark:bg-primary/20 hover:bg-primary/20 dark:hover:bg-primary/30 text-primary font-bold py-2 px-4 rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">person_add</span>
+                      Find New Traders
+                  </button>
+<button class="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-bold py-2 px-4 rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">settings</span>
+                      Adjust Settings
+                  </button>
+<button class="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-bold py-2 px-4 rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">download</span>
+                      Export Report
+                  </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="text-center p-4 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700">
+          Market Sentiment: <span class="font-semibold text-green-600 dark:text-green-500">Bullish</span>
+</footer>
+</main>
+</div>
+
+</body></html>

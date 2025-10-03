@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TradeBot - Active Trade Management</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#0a2743",
+              "background-light": "#f6f7f8",
+              "background-dark": "#111921",
+            },
+            fontFamily: {
+              "display": ["Inter"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200">
+<div class="flex flex-col min-h-screen">
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center gap-4">
+<div class="text-primary">
+<svg class="h-8 w-8" fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z"></path>
+<path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764ZM4.95178 32.7688L21.4543 6.30267C22.6288 4.4191 25.3712 4.41909 26.5457 6.30267L43.0534 32.777C43.0709 32.8052 43.0878 32.8338 43.104 32.8629L41.3563 33.8352C43.104 32.8629 43.1038 32.8626 43.104 32.8629L43.1051 32.865L43.1065 32.8675L43.1101 32.8739L43.1199 32.8918C43.1276 32.906 43.1377 32.9246 43.1497 32.9473C43.1738 32.9925 43.2062 33.0545 43.244 33.1299C43.319 33.2792 43.4196 33.489 43.5217 33.7317C43.6901 34.1321 44 34.9311 44 35.7391C44 37.4427 43.003 38.7775 41.8558 39.7209C40.6947 40.6757 39.1354 41.4464 37.385 42.0552C33.8654 43.2794 29.133 44 24 44C18.867 44 14.1346 43.2794 10.615 42.0552C8.86463 41.4464 7.30529 40.6757 6.14419 39.7209C4.99695 38.7775 3.99999 37.4427 3.99999 35.7391C3.99999 34.8725 4.29264 34.0922 4.49321 33.6393C4.60375 33.3898 4.71348 33.1804 4.79687 33.0311C4.83898 32.9556 4.87547 32.8935 4.9035 32.8471C4.91754 32.8238 4.92954 32.8043 4.93916 32.7889L4.94662 32.777L4.95178 32.7688ZM35.9868 29.004L24 9.77997L12.0131 29.004C12.4661 28.8609 12.9179 28.7342 13.3617 28.6282C16.4281 27.8961 20.0901 27.4783 24 27.4783C27.9099 27.4783 31.5719 27.8961 34.6383 28.6282C35.082 28.7342 35.5339 28.8609 35.9868 29.004Z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h1 class="text-xl font-bold text-slate-900 dark:text-white">TradeBot</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white" href="#">Dashboard</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white" href="#">Strategies</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white" href="#">Trades</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white" href="#">Backtests</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white" href="#">Docs</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden sm:flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-primary text-white text-sm font-bold shadow-sm hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined">add</span>
+<span class="truncate">New Trade</span>
+</button>
+<div class="size-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBP1zOha1BYKOOE_ToCcv5Rqw_12c2paWaFnlSNcxVPyklz_erCoKcB0tFwvTVq_98pRuf0aXcOYeZv6Rjj_azh2oRlJ7oP2yHsYiiAGi8p4FzFcpV7yoRFLKMBVL2qGWduVb1hqPAs6hD6tX6fq1oOtX401yx20aenHBBMvL2XOK9kdrtpwBBRxP2RMuLN2Taku3TAAh0VxLHoSsIOKOZ9moVwyutZPq8h9KFadjhWg1jIjw2UHZAIxUaest7XlbG1zPXG7MkXl6cy");'></div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col gap-12">
+<section>
+<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white">Active Trades</h2>
+<button class="flex sm:hidden items-center justify-center gap-2 h-10 px-4 rounded-lg bg-primary text-white text-sm font-bold shadow-sm hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined">add</span>
+<span class="truncate">New Trade</span>
+</button>
+</div>
+<div class="overflow-x-auto bg-background-light dark:bg-background-dark rounded-lg border border-slate-200 dark:border-slate-800">
+<table class="w-full text-sm text-left text-slate-500 dark:text-slate-400">
+<thead class="text-xs text-slate-700 dark:text-slate-300 uppercase bg-slate-50 dark:bg-slate-800/50">
+<tr>
+<th class="px-6 py-3" scope="col">Pair</th>
+<th class="px-6 py-3" scope="col">Strategy</th>
+<th class="px-6 py-3 text-center" scope="col">Status</th>
+<th class="px-6 py-3 text-right" scope="col">Entry Price</th>
+<th class="px-6 py-3 text-right" scope="col">Current Price</th>
+<th class="px-6 py-3 text-right" scope="col">Profit/Loss</th>
+<th class="px-6 py-3 text-right" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="bg-background-light dark:bg-background-dark border-b dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/30">
+<th class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap" scope="row">BTC/USD</th>
+<td class="px-6 py-4">Trend Following</td>
+<td class="px-6 py-4 text-center"><span class="px-2 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full dark:bg-green-900 dark:text-green-300">Active</span></td>
+<td class="px-6 py-4 text-right">$25,000</td>
+<td class="px-6 py-4 text-right">$26,500</td>
+<td class="px-6 py-4 text-right text-green-500">+6%</td>
+<td class="px-6 py-4 text-right"><a class="font-medium text-primary hover:underline" href="#">View</a></td>
+</tr>
+<tr class="bg-background-light dark:bg-background-dark border-b dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/30">
+<th class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap" scope="row">ETH/USD</th>
+<td class="px-6 py-4">Mean Reversion</td>
+<td class="px-6 py-4 text-center"><span class="px-2 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full dark:bg-green-900 dark:text-green-300">Active</span></td>
+<td class="px-6 py-4 text-right">$1,600</td>
+<td class="px-6 py-4 text-right">$1,550</td>
+<td class="px-6 py-4 text-right text-red-500">-3%</td>
+<td class="px-6 py-4 text-right"><a class="font-medium text-primary hover:underline" href="#">View</a></td>
+</tr>
+<tr class="bg-background-light dark:bg-background-dark border-b dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/30">
+<th class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap" scope="row">LTC/USD</th>
+<td class="px-6 py-4">Arbitrage</td>
+<td class="px-6 py-4 text-center"><span class="px-2 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full dark:bg-green-900 dark:text-green-300">Active</span></td>
+<td class="px-6 py-4 text-right">$90</td>
+<td class="px-6 py-4 text-right">$95</td>
+<td class="px-6 py-4 text-right text-green-500">+5.5%</td>
+<td class="px-6 py-4 text-right"><a class="font-medium text-primary hover:underline" href="#">View</a></td>
+</tr>
+<tr class="bg-background-light dark:bg-background-dark border-b dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/30">
+<th class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap" scope="row">XRP/USD</th>
+<td class="px-6 py-4">Momentum</td>
+<td class="px-6 py-4 text-center"><span class="px-2 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full dark:bg-green-900 dark:text-green-300">Active</span></td>
+<td class="px-6 py-4 text-right">$0.50</td>
+<td class="px-6 py-4 text-right">$0.52</td>
+<td class="px-6 py-4 text-right text-green-500">+4%</td>
+<td class="px-6 py-4 text-right"><a class="font-medium text-primary hover:underline" href="#">View</a></td>
+</tr>
+<tr class="bg-background-light dark:bg-background-dark hover:bg-slate-50 dark:hover:bg-slate-800/30">
+<th class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap" scope="row">ADA/USD</th>
+<td class="px-6 py-4">Scalping</td>
+<td class="px-6 py-4 text-center"><span class="px-2 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-full dark:bg-green-900 dark:text-green-300">Active</span></td>
+<td class="px-6 py-4 text-right">$0.30</td>
+<td class="px-6 py-4 text-right">$0.29</td>
+<td class="px-6 py-4 text-right text-red-500">-3.3%</td>
+<td class="px-6 py-4 text-right"><a class="font-medium text-primary hover:underline" href="#">View</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+<div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Pairs &amp; Strategies</h2>
+<form class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1" for="pair-select">Select Pair</label>
+<select class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-background-light dark:bg-background-dark text-slate-900 dark:text-white focus:ring-primary focus:border-primary" id="pair-select">
+<option>BTC/USD</option>
+<option>ETH/USD</option>
+<option>LTC/USD</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1" for="strategy-select">Select Strategy</label>
+<select class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-background-light dark:bg-background-dark text-slate-900 dark:text-white focus:ring-primary focus:border-primary" id="strategy-select">
+<option>Trend Following</option>
+<option>Mean Reversion</option>
+<option>Arbitrage</option>
+</select>
+</div>
+<button class="w-full sm:w-auto flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-primary text-white text-sm font-bold shadow-sm hover:bg-primary/90 transition-colors" type="submit">
+<span class="material-symbols-outlined">add_circle</span>
+<span>Add Pair</span>
+</button>
+</form>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Asset Allocation</h2>
+<div class="p-6 bg-slate-50 dark:bg-slate-800/30 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400">Total Allocation</p>
+<p class="text-3xl font-bold text-slate-900 dark:text-white">100%</p>
+</div>
+<div class="flex items-center gap-1 text-sm font-medium text-green-500">
+<span class="material-symbols-outlined text-base">trending_up</span>
+<span>+10%</span>
+</div>
+</div>
+<div class="h-48 flex items-end gap-4">
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-full flex items-end"><div class="bg-primary w-full rounded-full" style="height: 60%;"></div></div>
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400">BTC</p>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-full flex items-end"><div class="bg-primary w-full rounded-full" style="height: 30%;"></div></div>
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400">ETH</p>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-full flex items-end"><div class="bg-primary w-full rounded-full" style="height: 60%;"></div></div>
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400">LTC</p>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-full flex items-end"><div class="bg-primary w-full rounded-full" style="height: 0%;"></div></div>
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400">XRP</p>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-full flex items-end"><div class="bg-primary w-full rounded-full" style="height: 50%;"></div></div>
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400">ADA</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Market Overview</h2>
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+<div class="xl:col-span-2 overflow-x-auto bg-background-light dark:bg-background-dark rounded-lg border border-slate-200 dark:border-slate-800">
+<table class="w-full text-sm text-left text-slate-500 dark:text-slate-400">
+<thead class="text-xs text-slate-700 dark:text-slate-300 uppercase bg-slate-50 dark:bg-slate-800/50">
+<tr>
+<th class="px-6 py-3" scope="col">Cryptocurrency</th>
+<th class="px-6 py-3 text-right" scope="col">Price</th>
+<th class="px-6 py-3 text-right" scope="col">24h Change</th>
+<th class="px-6 py-3 text-right" scope="col">Market Cap</th>
+</tr>
+</thead>
+<tbody>
+<tr class="bg-background-light dark:bg-background-dark border-b dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/30">
+<th class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap" scope="row">Bitcoin</th>
+<td class="px-6 py-4 text-right">$26,500</td>
+<td class="px-6 py-4 text-right text-green-500">+2.5%</td>
+<td class="px-6 py-4 text-right">$500B</td>
+</tr>
+<tr class="bg-background-light dark:bg-background-dark border-b dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/30">
+<th class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap" scope="row">Ethereum</th>
+<td class="px-6 py-4 text-right">$1,550</td>
+<td class="px-6 py-4 text-right text-red-500">-1.2%</td>
+<td class="px-6 py-4 text-right">$180B</td>
+</tr>
+<tr class="bg-background-light dark:bg-background-dark border-b dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/30">
+<th class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap" scope="row">Litecoin</th>
+<td class="px-6 py-4 text-right">$95</td>
+<td class="px-6 py-4 text-right text-green-500">+3.1%</td>
+<td class="px-6 py-4 text-right">$6.5B</td>
+</tr>
+<tr class="bg-background-light dark:bg-background-dark border-b dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/30">
+<th class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap" scope="row">Ripple</th>
+<td class="px-6 py-4 text-right">$0.52</td>
+<td class="px-6 py-4 text-right text-green-500">+1.8%</td>
+<td class="px-6 py-4 text-right">$25B</td>
+</tr>
+<tr class="bg-background-light dark:bg-background-dark hover:bg-slate-50 dark:hover:bg-slate-800/30">
+<th class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap" scope="row">Cardano</th>
+<td class="px-6 py-4 text-right">$0.29</td>
+<td class="px-6 py-4 text-right text-red-500">-2.7%</td>
+<td class="px-6 py-4 text-right">$10B</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="space-y-6">
+<div class="p-6 bg-slate-50 dark:bg-slate-800/30 rounded-xl">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Market Cap</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">$1.1T</p>
+</div>
+<div class="p-6 bg-slate-50 dark:bg-slate-800/30 rounded-xl">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">24h Volume</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">$50B</p>
+</div>
+<div class="p-6 bg-slate-50 dark:bg-slate-800/30 rounded-xl">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Dominance</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">BTC: 45%</p>
+</div>
+</div>
+</div>
+</section>
+<section class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="p-6 bg-slate-50 dark:bg-slate-800/30 rounded-xl">
+<div class="flex items-center gap-6">
+<div class="flex-1">
+<p class="text-sm text-slate-500 dark:text-slate-400">Fear &amp; Greed Index</p>
+<p class="text-xl font-bold text-slate-900 dark:text-white mt-1">Neutral</p>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-2">The market sentiment is currently neutral.</p>
+</div>
+<div class="w-32 h-32 bg-center bg-cover rounded-lg" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDdtt86u-vqrsZzLfAkLj1UFJD6idM94NzUuNymnHADGKw8vZco-p441CJo3FplKFd2LqpKFZ7PUT1iyLjBQy38fxfFRGTuLeQxgyvfmg075CsHdLAurdEFNoWJ1pzxIyV5_xRkLsoaDU449Wa375mqNHtExeV-Surh7shWtdmNMXZmBu24v7dD7V8Iw4jNlB2xCANCT7Ax4hvq0RZSUmqAgDJOKxhy14AVouLb7pktwIX-dz-P605jpeChRdPb1tDKckfb6wJ91qPz");'></div>
+</div>
+</div>
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Trending Cryptocurrencies</h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 text-sm font-medium rounded-full bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary/80">Solana</span>
+<span class="px-3 py-1 text-sm font-medium rounded-full bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary/80">Polkadot</span>
+<span class="px-3 py-1 text-sm font-medium rounded-full bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary/80">Avalanche</span>
+<span class="px-3 py-1 text-sm font-medium rounded-full bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary/80">Chainlink</span>
+<span class="px-3 py-1 text-sm font-medium rounded-full bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary/80">Binance Coin</span>
+</div>
+</div>
+</section>
+<section>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">News &amp; Updates</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-background-light dark:bg-slate-800/30 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div class="w-full h-40 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDTovUYwbZc9-ry-KhRN18IeGyPWOD6ndaL3N0Xptvn4kwKmBdNcPmsLhSRAxlywCOl-aIaq5qUzH-LjWwD5sadqOOLH3DXVznW9Dzl-JvqxKO6ON7KnZG3ddYvZsMcJqEOxW1dUCEWHTgSZVaoTTN-uN9veqZBdJ7YmESzUfrjUt5HczV6ldn_zxaqleoK4G9uyJExSIJ1exoPXhQU2SloQXPcJ2sY98rxczqVwMFdLPvN8ZcCKDIJQasvPG4X9XMyhF212rIUHuPq");'></div>
+<div class="p-4">
+<h3 class="font-bold text-slate-900 dark:text-white mb-2">Bitcoin Price Surges Amidst Market Optimism</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Bitcoin's price has seen a significant increase, driven by renewed market optimism and institutional investment.</p>
+</div>
+</div>
+<div class="bg-background-light dark:bg-slate-800/30 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div class="w-full h-40 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCidrD663tyuR_nWosoeCP9F5uY--In8B2DDDjXN7cceCs2g_NObOe2AZelSTjd2J86YM-Sudrtvz2S_BjlyoHxezaeuRZueIJVqlhe6xmgKE1bvK7lb5V-k1-kIXBOeiOerqdp8PloklD4yqK3jUVofAggBXWTRddka0baNGn7t4wdDL8SQ3JWx53Fz-L0-EY3_AmAZPv6RrXP7ObQsQkYNGciu5pbTYb2FEgQcRi1OGHhgZ7K2nmo3k5SiKCUNaSfXtbFNpMLcVVh");'></div>
+<div class="p-4">
+<h3 class="font-bold text-slate-900 dark:text-white mb-2">Ethereum 2.0 Upgrade Successfully Implemented</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">The successful implementation of the Ethereum 2.0 upgrade marks a major milestone for the network's scalability and efficiency.</p>
+</div>
+</div>
+<div class="bg-background-light dark:bg-slate-800/30 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div class="w-full h-40 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAZa8AIQvGIgkL9hwkY_kaGtbj7PRw4jXCKFfzBWTPQuhZLcntasFYAsCNyYNTym6Qf35Gjwc1JUChWjZuL_dmP9NZFXLtOXuQSgWjJtzaAWQg9Noh6amogX9J0NN572Ae1IONUH0HoHbowoTa7UY-yunfIJSiFWUuK3XX6LLbxM_s0Vo3F6W6ewPz_WdwOmgl_fmC5wv7nBKZ3w-A_ghj09aaZZWfoBxYTx6Ch652u2w614VHUfwNOaCqQwN31dzlSyImjV7eSEvMR");'></div>
+<div class="p-4">
+<h3 class="font-bold text-slate-900 dark:text-white mb-2">Litecoin Halving Event Anticipated</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">The upcoming Litecoin halving event is generating excitement among investors, with potential impacts on price and mining rewards.</p>
+</div>
+</div>
+<div class="bg-background-light dark:bg-slate-800/30 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div class="w-full h-40 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCiu5KhV1BBnnsRM13sDeElYLtYlB39VgR6G-ErkbDTCiQrAV2xWD9WAUgfUwpgtruskei-Cks2wUwFVhFuVESXNGQg6BxKSWTvf9llBdTarI7X3fldGQh8k2s6ElahA4QTSTEilOit5CW-TIrN4QNR9GYUibNxPiWHw-PaV6_Rd5h50ZmFJSVauOCsfZA-W-fG5OJI919Oc99uMk5qGQyqMouJ3dnM1oNtMV5I0xCHxp2ntbyd-XxxsTcs8HodJ-8txMUO5hNARljc");'></div>
+<div class="p-4">
+<h3 class="font-bold text-slate-900 dark:text-white mb-2">Ripple Lawsuit Update: Positive Developments</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Recent developments in the Ripple lawsuit have been viewed positively, boosting confidence in the future of the cryptocurrency.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-slate-50 dark:bg-slate-800/30 rounded-xl py-12 px-6 text-center">
+<div class="max-w-2xl mx-auto">
+<h2 class="text-3xl font-extrabold text-slate-900 dark:text-white">Stay Updated</h2>
+<p class="mt-4 text-lg text-slate-600 dark:text-slate-300">Get the latest crypto news and updates delivered to your inbox.</p>
+<form class="mt-8 flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
+<input class="flex-grow w-full rounded-lg border-slate-300 dark:border-slate-700 bg-background-light dark:bg-background-dark text-slate-900 dark:text-white focus:ring-primary focus:border-primary" placeholder="Your email address" required="" type="email"/>
+<button class="flex items-center justify-center h-12 px-6 rounded-lg bg-primary text-white font-bold shadow-sm hover:bg-primary/90 transition-colors" type="submit">
+                            Subscribe
+                        </button>
+</form>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TradeBot Support</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#0a2743",
+            "background-light": "#f6f7f8",
+            "background-dark": "#111921",
+            "card-light": "#ffffff",
+            "card-dark": "#1a242e",
+          },
+          fontFamily: {
+            display: ["Inter"],
+          },
+          borderRadius: {
+            DEFAULT: "0.5rem",
+            lg: "0.75rem",
+            xl: "1rem",
+            full: "9999px",
+          },
+        },
+      },
+    };
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-in-out;
+    }
+    .accordion-toggle:checked ~ .accordion-content {
+      max-height: 20rem;}
+    .accordion-toggle:checked + label .material-symbols-outlined {
+      transform: rotate(180deg);
+    }.modal {
+        display: none;position: fixed;z-index: 100;left: 0;
+        top: 0;
+        width: 100%;height: 100%;overflow: auto;background-color: rgb(0,0,0);background-color: rgba(0,0,0,0.8);}
+    .modal-content {
+        position: relative;
+        margin: auto;
+        padding: 0;
+        width: 80%;
+        max-width: 700px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .close {
+        color: white;
+        position: absolute;
+        top: 10px;
+        right: 25px;
+        font-size: 35px;
+        font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+        color: #999;
+        text-decoration: none;
+        cursor: pointer;
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="flex min-h-screen">
+<aside class="w-64 bg-background-light dark:bg-background-dark border-r border-gray-200 dark:border-gray-700 flex flex-col sticky top-0 h-screen">
+<div class="flex items-center gap-2 p-4 border-b border-gray-200 dark:border-gray-700">
+<div class="text-primary size-8">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764ZM4.95178 32.7688L21.4543 6.30267C22.6288 4.4191 25.3712 4.41909 26.5457 6.30267L43.0534 32.777C43.0709 32.8052 43.0878 32.8338 43.104 32.8629L41.3563 33.8352C43.104 32.8629 43.1038 32.8626 43.104 32.8629L43.1051 32.865L43.1065 32.8675L43.1101 32.8739L43.1199 32.8918C43.1276 32.906 43.1377 32.9246 43.1497 32.9473C43.1738 32.9925 43.2062 33.0545 43.244 33.1299C43.319 33.2792 43.4196 33.489 43.5217 33.7317C43.6901 34.1321 44 34.9311 44 35.7391C44 37.4427 43.003 38.7775 41.8558 39.7209C40.6947 40.6757 39.1354 41.4464 37.385 42.0552C33.8654 43.2794 29.133 44 24 44C18.867 44 14.1346 43.2794 10.615 42.0552C8.86463 41.4464 7.30529 40.6757 6.14419 39.7209C4.99695 38.7775 3.99999 37.4427 3.99999 35.7391C3.99999 34.8725 4.29264 34.0922 4.49321 33.6393C4.60375 33.3898 4.71348 33.1804 4.79687 33.0311C4.83898 32.9556 4.87547 32.8935 4.9035 32.8471C4.91754 32.8238 4.92954 32.8043 4.93916 32.7889L4.94662 32.777L4.95178 32.7688ZM35.9868 29.004L24 9.77997L12.0131 29.004C12.4661 28.8609 12.9179 28.7342 13.3617 28.6282C16.4281 27.8961 20.0901 27.4783 24 27.4783C27.9099 27.4783 31.5719 27.8961 34.6383 28.6282C35.082 28.7342 35.5339 28.8609 35.9868 29.004Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h1 class="text-xl font-bold text-gray-900 dark:text-white">TradeBot</h1>
+</div>
+<nav class="flex-1 px-2 py-4 space-y-2">
+<a class="flex items-center px-4 py-2 text-sm font-medium rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+            Dashboard
+          </a>
+<a class="flex items-center px-4 py-2 text-sm font-medium rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined mr-3">smart_toy</span>
+            Bots
+          </a>
+<a class="flex items-center px-4 py-2 text-sm font-medium rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined mr-3">pie_chart</span>
+            Portfolio
+          </a>
+<a class="flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary dark:bg-primary/20" href="#">
+<span class="material-symbols-outlined mr-3">support_agent</span>
+            Support
+          </a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="bg-primary/10 dark:bg-primary/20 p-4 rounded-lg text-center">
+<p class="text-sm text-primary dark:text-gray-200">Need help with your strategy?</p>
+<button class="mt-2 w-full bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded-lg text-sm">
+            Contact an Expert
+          </button>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col">
+<header class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm z-10">
+<div class="flex-1">
+<h2 class="text-3xl font-bold text-gray-900 dark:text-white">Support &amp; Documentation</h2>
+<p class="text-gray-500 dark:text-gray-400 mt-1">Your guide to mastering TradeBot.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-800 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Search documentation..." type="text"/>
+</div>
+<button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCu73t9LuBEn1ZVeRybkW-U691bAyPlGdZehDk8hqDfM-D9bl7ODG7bP08kjlbBGzmKiSpgLjQt8u0JcHx6t2Cnjm5esujEguM-muwHajow7FCBMs4vDmtsYepw3fXU7wQnAlc79EOUaJfWdQM3q_SJIl9-vEI8OBxDf9paxBHzR7NeszubtGG-Nk4zsvcbmlOwQl49nK8dp_fe25NyqBJsqF6NlilW2BHBAOnVtBZ4erADtHVFAkJeC7a8xYQJv34WaUCbwhlVuKHo");'></div>
+</div>
+</header>
+<div class="flex-1 p-6 space-y-8">
+<section>
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-2xl font-semibold text-gray-900 dark:text-white">Getting Started</h3>
+<div class="flex items-center gap-2 text-sm">
+<a class="text-primary hover:underline" href="#">Documentation</a>
+<span class="text-gray-400 dark:text-gray-500">|</span>
+<a class="text-primary hover:underline" href="#">API Reference</a>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-xl flex items-start gap-4">
+<div class="bg-primary/10 text-primary p-3 rounded-full">
+<span class="material-symbols-outlined">looks_one</span>
+</div>
+<div>
+<h4 class="font-bold text-lg">Create Your Bot</h4>
+<p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Define your trading strategy and select pairs.</p>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-xl flex items-start gap-4">
+<div class="bg-primary/10 text-primary p-3 rounded-full">
+<span class="material-symbols-outlined">looks_two</span>
+</div>
+<div>
+<h4 class="font-bold text-lg">Copy a Trader</h4>
+<p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Browse top performers and replicate their strategies.</p>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-xl flex items-start gap-4">
+<div class="bg-primary/10 text-primary p-3 rounded-full">
+<span class="material-symbols-outlined">looks_3</span>
+</div>
+<div>
+<h4 class="font-bold text-lg">Backtest &amp; Optimize</h4>
+<p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Test your bot against historical data to refine it.</p>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark p-6 rounded-xl flex items-start gap-4">
+<div class="bg-primary/10 text-primary p-3 rounded-full">
+<span class="material-symbols-outlined">looks_4</span>
+</div>
+<div>
+<h4 class="font-bold text-lg">Deploy &amp; Monitor</h4>
+<p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Launch and track your bot in the live market.</p>
+</div>
+</div>
+</div>
+</section>
+<section>
+<h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Frequently Asked Questions</h3>
+<div class="space-y-2">
+<div class="bg-card-light dark:bg-card-dark rounded-lg">
+<input class="accordion-toggle hidden" id="faq1" name="faq-accordion" type="checkbox"/>
+<label class="flex items-center justify-between p-4 cursor-pointer" for="faq1">
+<span class="font-semibold">How do I connect my exchange account?</span>
+<span class="material-symbols-outlined transform transition-transform duration-300">expand_more</span>
+</label>
+<div class="accordion-content">
+<p class="p-4 pt-0 text-gray-500 dark:text-gray-400">You can connect your exchange account by navigating to the 'Settings' page and entering your API keys. We support major exchanges like Binance, Coinbase Pro, and Kraken. Ensure your API keys have the necessary permissions for trading and reading account balances, but not for withdrawals.</p>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-lg">
+<input class="accordion-toggle hidden" id="faq2" name="faq-accordion" type="checkbox"/>
+<label class="flex items-center justify-between p-4 cursor-pointer" for="faq2">
+<span class="font-semibold">What are the security measures in place?</span>
+<span class="material-symbols-outlined transform transition-transform duration-300">expand_more</span>
+</label>
+<div class="accordion-content">
+<p class="p-4 pt-0 text-gray-500 dark:text-gray-400">Security is our top priority. All API keys are encrypted and stored in a secure vault. We utilize multi-factor authentication, and our platform undergoes regular security audits. We highly recommend you disable withdrawal permissions on your API keys for an added layer of security.</p>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-lg">
+<input class="accordion-toggle hidden" id="faq3" name="faq-accordion" type="checkbox"/>
+<label class="flex items-center justify-between p-4 cursor-pointer" for="faq3">
+<span class="font-semibold">Can I run multiple bots at once?</span>
+<span class="material-symbols-outlined transform transition-transform duration-300">expand_more</span>
+</label>
+<div class="accordion-content">
+<p class="p-4 pt-0 text-gray-500 dark:text-gray-400">Yes, depending on your subscription plan, you can run multiple trading bots simultaneously. Each bot can have its own unique strategy and trade on different pairs. This allows you to diversify your automated trading strategies across various market conditions.</p>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-lg">
+<input class="accordion-toggle hidden" id="faq4" name="faq-accordion" type="checkbox"/>
+<label class="flex items-center justify-between p-4 cursor-pointer" for="faq4">
+<span class="font-semibold">How is pricing and billing handled?</span>
+<span class="material-symbols-outlined transform transition-transform duration-300">expand_more</span>
+</label>
+<div class="accordion-content">
+<p class="p-4 pt-0 text-gray-500 dark:text-gray-400">We offer several subscription tiers based on the number of active bots and features. Billing is handled on a monthly or annual basis via credit card. You can manage your subscription and view invoices from your account's 'Billing' section. There are no hidden fees or commissions on trades.</p>
+</div>
+</div>
+</div>
+</section>
+<section>
+<h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Video Tutorials</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="bg-card-light dark:bg-card-dark rounded-xl overflow-hidden group cursor-pointer" onclick="openModal('video1')">
+<div class="relative">
+<img alt="Video thumbnail for platform overview" class="w-full h-40 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBykzcsKlqozY5sS1WvPvU4XE175xOE7vztvpbLwA8p5gQlrlAYogh0GCEbT98-0z8CveRFe7teEEtvi6HLDKkjReTgMhaoYSQJrxg22BJX9wfsD5zGtcSwMpRotKwFnuYg51mrd8hWNdv5nLxeEYiukCKOC1h9OxVlkCwNnxzcs1i8hp71Y9ZBI9pLca9Z_PLAExGxPs96vG9TDvr5bOxK4XwZoFj8gq4n_-gWRaYftdDHyiqqZcDX6_2_qV7BFT-0Vt2WwFxiAoGe"/>
+<div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white text-6xl">play_circle</span>
+</div>
+</div>
+<div class="p-4">
+<h4 class="font-bold text-lg">Platform Overview</h4>
+<p class="text-gray-500 dark:text-gray-400 text-sm mt-1">A quick tour of the TradeBot dashboard and its core features.</p>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-xl overflow-hidden group cursor-pointer" onclick="openModal('video2')">
+<div class="relative">
+<img alt="Video thumbnail for creating your first bot" class="w-full h-40 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5y9lnDtjy-0GwuJ2gNWDgZm2h_KC82ZJcVeXCZVPIiHQoVpGdi_n35tA5XFo76Tfuv1GUE6wAsCm5Yvr11ZT-CkSkFxHSOOPB9cLH2JMX0ZQXoL0rLLNauN2ZV6vfxov5Gqo_CefsG6jtl6djWsFjhKJXY6beUYfQ-crBr3sWcvv_PJDgt5I8Kr1AQXBS6Vec04jzjEwQd8G9W8SyKY0_ZpjIy5UAVeToz6N17KXMOMTOJDGKGeAMjvZrnApUX9coPVhxTVCU40MP"/>
+<div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white text-6xl">play_circle</span>
+</div>
+</div>
+<div class="p-4">
+<h4 class="font-bold text-lg">Creating Your First Bot</h4>
+<p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Step-by-step guide to setting up and launching a simple bot.</p>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-xl overflow-hidden group cursor-pointer" onclick="openModal('video3')">
+<div class="relative">
+<img alt="Video thumbnail for advanced strategies" class="w-full h-40 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEXVQ8aCzHtaM9h1T_lMIF0XHIs8WxysUDAuBUp-wlE3f9XBg2RuYlezTYhmh0QU0hETJRS_vNuRri4ruiXBfh29jRyTed0gr0vZ3Ioizl5oE4OR6MUAVvB4J4irf1ffOQtW__-0Wsw06M5HxkHQh27nOIcZFf3ixgbhOPuVJhsoIe00RXMoRE6xxEqtDaHjdxt9aD7sXjxWE4jkViVCW66edEg_q5koW1mu2xa8z4aMXaaiMT_ghFUQdnK6G4MP_6nTdQpRMWP2uA"/>
+<div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white text-6xl">play_circle</span>
+</div>
+</div>
+<div class="p-4">
+<h4 class="font-bold text-lg">Advanced Strategies</h4>
+<p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Learn about integrating custom indicators and risk management.</p>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="border-2 border-red-500/50 bg-red-500/10 dark:bg-red-500/5 p-6 rounded-xl">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-red-500 text-3xl">gpp_maybe</span>
+<div>
+<h3 class="text-xl font-bold text-red-600 dark:text-red-400">Risk Disclaimer</h3>
+<p class="text-red-800 dark:text-red-300 mt-2 text-sm">
+                        Automated trading has inherent risks. The use of TradeBot is at your own risk. This service is provided "as is" without warranty of any kind. We are not a registered investment advisor, broker-dealer, or financial institution. The information provided on this platform does not constitute investment advice, financial advice, trading advice, or any other sort of advice. You should not treat any of the platform's content as such. Trading cryptocurrencies is highly volatile and carries a substantial risk of loss. Past performance is not indicative of future results. Before engaging in any trading activity, you should conduct your own due diligence and consult your financial advisor. We are not responsible for any investment decisions made based on the information provided by the TradeBot platform.
+                    </p>
+<div class="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+<a class="text-sm font-medium text-red-700 dark:text-red-300 hover:underline" href="#">Full Risk Disclosure</a>
+<a class="text-sm font-medium text-red-700 dark:text-red-300 hover:underline" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="bg-card-light dark:bg-card-dark p-8 rounded-xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div>
+<h3 class="text-2xl font-semibold text-gray-900 dark:text-white">Contact &amp; Support</h3>
+<p class="text-gray-500 dark:text-gray-400 mt-2">Our team is here to help. Reach out to us through any of the channels below.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">email</span>
+<div>
+<h4 class="font-semibold">Email Support</h4>
+<p class="text-sm text-gray-500 dark:text-gray-400">support@tradebot.com</p>
+<p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Avg. Response: 12 hours</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">forum</span>
+<div>
+<h4 class="font-semibold">Community Forum</h4>
+<p class="text-sm text-gray-500 dark:text-gray-400">community.tradebot.com</p>
+<p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Peer-to-peer help</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">headset_mic</span>
+<div>
+<h4 class="font-semibold">Live Chat</h4>
+<p class="text-sm text-gray-500 dark:text-gray-400">Available on-platform</p>
+<p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Avg. Response: 5 mins</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">call</span>
+<div>
+<h4 class="font-semibold">Phone Support</h4>
+<p class="text-sm text-gray-500 dark:text-gray-400">(Enterprise Plan)</p>
+<p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Dedicated Line</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<footer class="text-center p-4 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700">
+          © 2024 TradeBot. All rights reserved.
+        </footer>
+</main>
+</div>
+<div class="modal" id="video1">
+<div class="modal-content">
+<span class="close" onclick="closeModal('video1')">×</span>
+<video autoplay="" class="w-full h-auto" controls="">
+<source src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4"/>
+      Your browser does not support the video tag.
+    </video>
+</div>
+</div>
+<div class="modal" id="video2">
+<div class="modal-content">
+<span class="close" onclick="closeModal('video2')">×</span>
+<video autoplay="" class="w-full h-auto" controls="">
+<source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4"/>
+      Your browser does not support the video tag.
+    </video>
+</div>
+</div>
+<div class="modal" id="video3">
+<div class="modal-content">
+<span class="close" onclick="closeModal('video3')">×</span>
+<video autoplay="" class="w-full h-auto" controls="">
+<source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4"/>
+        Your browser does not support the video tag.
+    </video>
+</div>
+</div>
+<script>
+    function openModal(videoId) {
+        var modal = document.getElementById(videoId);
+        modal.style.display = "block";
+        var video = modal.getElementsByTagName('video')[0];
+        video.play();
+    }
+    function closeModal(videoId) {
+        var modal = document.getElementById(videoId);
+        modal.style.display = "none";
+        var video = modal.getElementsByTagName('video')[0];
+        video.pause();
+        video.currentTime = 0;
+    }
+    // Close modal when clicking outside of the video
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            closeModal(event.target.id);
+        }
+    }
+</script>
+</body></html>

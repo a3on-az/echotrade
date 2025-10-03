@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TradeBot - Audit Trail</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#0a2743",
+              "background-light": "#f6f7f8",
+              "background-dark": "#111921",
+              "surface-light": "#ffffff",
+              "surface-dark": "#1b2732",
+              "border-light": "#e7eaee",
+              "border-dark": "#253646",
+              "text-primary-light": "#111921",
+              "text-primary-dark": "#ffffff",
+              "text-secondary-light": "#586e84",
+              "text-secondary-dark": "#95aec6",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: { DEFAULT: "0.5rem", lg: "0.75rem", xl: "1rem", full: "9999px" },
+          },
+        },
+      };
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-primary-light dark:text-text-primary-dark">
+<div class="flex min-h-screen flex-col">
+<header class="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-border-light bg-surface-light px-4 dark:border-border-dark dark:bg-surface-dark sm:px-6 lg:px-8">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<svg class="h-8 w-8 text-primary" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764ZM4.95178 32.7688L21.4543 6.30267C22.6288 4.4191 25.3712 4.41909 26.5457 6.30267L43.0534 32.777C43.0709 32.8052 43.0878 32.8338 43.104 32.8629L41.3563 33.8352C43.104 32.8629 43.1038 32.8626 43.104 32.8629L43.1051 32.865L43.1065 32.8675L43.1101 32.8739L43.1199 32.8918C43.1276 32.906 43.1377 32.9246 43.1497 32.9473C43.1738 32.9925 43.2062 33.0545 43.244 33.1299C43.319 33.2792 43.4196 33.489 43.5217 33.7317C43.6901 34.1321 44 34.9311 44 35.7391C44 37.4427 43.003 38.7775 41.8558 39.7209C40.6947 40.6757 39.1354 41.4464 37.385 42.0552C33.8654 43.2794 29.133 44 24 44C18.867 44 14.1346 43.2794 10.615 42.0552C8.86463 41.4464 7.30529 40.6757 6.14419 39.7209C4.99695 38.7775 3.99999 37.4427 3.99999 35.7391C3.99999 34.8725 4.29264 34.0922 4.49321 33.6393C4.60375 33.3898 4.71348 33.1804 4.79687 33.0311C4.83898 32.9556 4.87547 32.8935 4.9035 32.8471C4.91754 32.8238 4.92954 32.8043 4.93916 32.7889L4.94662 32.777L4.95178 32.7688ZM35.9868 29.004L24 9.77997L12.0131 29.004C12.4661 28.8609 12.9179 28.7342 13.3617 28.6282C16.4281 27.8961 20.0901 27.4783 24 27.4783C27.9099 27.4783 31.5719 27.8961 34.6383 28.6282C35.082 28.7342 35.5339 28.8609 35.9868 29.004Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+<h1 class="text-lg font-bold">TradeBot</h1>
+</div>
+</div>
+<div class="flex flex-1 items-center justify-end gap-2 sm:gap-4">
+<div class="relative w-full max-w-xs">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark"> search </span>
+<input class="h-10 w-full rounded-lg border border-border-light bg-background-light pl-10 pr-4 text-text-primary-light placeholder:text-text-secondary-light focus:border-primary focus:ring-primary dark:border-border-dark dark:bg-background-dark dark:text-text-primary-dark dark:placeholder:text-text-secondary-dark" placeholder="Search" type="search"/>
+</div>
+<button class="flex h-10 w-10 items-center justify-center rounded-lg border border-border-light bg-surface-light text-text-secondary-light transition-colors hover:bg-primary/10 dark:border-border-dark dark:bg-surface-dark dark:text-text-secondary-dark dark:hover:bg-primary/20">
+<span class="material-symbols-outlined"> notifications </span>
+</button>
+<div class="h-10 w-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZqlYnelR_flV2w7U19K7UBp9IcbZPvcfwWiZuKuPXwkAA__seeEd7YNCirRjy2AKtkcRLmsCXCfA9QcFWArn76-TGgFTjjaJdhrg1ISoSX5ie18_iYk5lPcbpEdrS61cwWvR8L-qKoPXeq9f45Mq2nmNgQB2lHr37f-EIR75C-yDrG4O8qjd3GsCBsUZe-EPv7V87IhjNLmj_HvJDDbjyb3Lk9Lfdf6VLXbxIHn46ucRV3IOvltpE9Y59DTmo9IS_Rl_Tx8tTtNaW");'></div>
+</div>
+</header>
+<main class="flex-1">
+<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+<div class="mb-8">
+<h1 class="text-3xl font-bold tracking-tight">Audit Trail &amp; Troubleshooting</h1>
+</div>
+<div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+<div class="relative md:col-span-2">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark"> search </span>
+<input class="h-12 w-full rounded-lg border border-border-light bg-surface-light pl-10 pr-4 text-text-primary-light placeholder:text-text-secondary-light focus:border-primary focus:ring-primary dark:border-border-dark dark:bg-surface-dark dark:text-text-primary-dark dark:placeholder:text-text-secondary-dark" placeholder="Search logs by keyword, user, or event..." type="search"/>
+</div>
+<button class="flex h-12 items-center justify-center gap-2 rounded-lg border border-border-light bg-surface-light px-4 text-sm font-medium transition-colors hover:bg-primary/10 dark:border-border-dark dark:bg-surface-dark dark:hover:bg-primary/20">
+<span>Filter by</span>
+<span class="material-symbols-outlined text-base"> filter_list </span>
+</button>
+</div>
+<div class="mb-8 rounded-lg border border-border-light bg-surface-light p-4 dark:border-border-dark dark:bg-surface-dark">
+<p class="text-center text-text-secondary-light dark:text-text-secondary-dark">Date Range Picker / Calendar Component would go here</p>
+</div>
+<div class="space-y-12">
+<div class="space-y-4">
+<h2 class="text-2xl font-semibold">Trade Execution Logs</h2>
+<div class="@container overflow-x-auto">
+<div class="min-w-full overflow-hidden rounded-lg border border-border-light dark:border-border-dark">
+<table class="min-w-full divide-y divide-border-light dark:divide-border-dark">
+<thead class="bg-background-light dark:bg-background-dark">
+<tr>
+<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark" scope="col">Timestamp</th>
+<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark" scope="col">Strategy</th>
+<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark" scope="col">Asset</th>
+<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark" scope="col">Action</th>
+<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark" scope="col">Quantity</th>
+<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark" scope="col">Price</th>
+<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark" scope="col">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-light bg-surface-light dark:divide-border-dark dark:bg-surface-dark">
+<tr>
+<td class="whitespace-nowrap px-4 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">2024-07-26 14:30:00</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm">Momentum</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm">BTC/USD</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm text-green-500">Buy</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm">1.5</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm">30,000</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm"><span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/40 dark:text-green-300">Executed</span></td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-4 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">2024-07-26 14:35:00</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm">Mean Reversion</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm">ETH/USD</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm text-red-500">Sell</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm">10</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm">2,000</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm"><span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/40 dark:text-green-300">Executed</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<h2 class="text-2xl font-semibold">System Activity Logs</h2>
+<div class="overflow-hidden rounded-lg border border-border-light dark:border-border-dark">
+<table class="min-w-full divide-y divide-border-light dark:divide-border-dark">
+<thead class="bg-background-light dark:bg-background-dark">
+<tr>
+<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark" scope="col">Timestamp</th>
+<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark" scope="col">Event</th>
+<th class="w-1/2 px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark" scope="col">Details</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-light bg-surface-light dark:divide-border-dark dark:bg-surface-dark">
+<tr>
+<td class="whitespace-nowrap px-4 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">2024-07-26 14:25:00</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm">Strategy Started</td>
+<td class="px-4 py-4 text-sm">Momentum strategy started for BTC/USD</td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-4 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">2024-07-26 14:30:00</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm">Trade Executed</td>
+<td class="px-4 py-4 text-sm">Buy 1.5 BTC/USD at 30,000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="space-y-4">
+<h2 class="text-2xl font-semibold">Error &amp; Alert History</h2>
+<div class="overflow-hidden rounded-lg border border-border-light dark:border-border-dark">
+<table class="min-w-full divide-y divide-border-light dark:divide-border-dark">
+<thead class="bg-background-light dark:bg-background-dark">
+<tr>
+<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark" scope="col">Timestamp</th>
+<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark" scope="col">Type</th>
+<th class="w-1/2 px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark" scope="col">Message</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-light bg-surface-light dark:divide-border-dark dark:bg-surface-dark">
+<tr>
+<td class="whitespace-nowrap px-4 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">2024-07-26 14:20:00</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm"><span class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300">Alert</span></td>
+<td class="px-4 py-4 text-sm">High volatility detected in BTC/USD</td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-4 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">2024-07-26 14:30:00</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm"><span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900/40 dark:text-red-300">Error</span></td>
+<td class="px-4 py-4 text-sm">Trade execution failed for ETH/USD: Insufficient funds.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="space-y-4">
+<h2 class="text-2xl font-semibold">Performance &amp; Analytics Logs</h2>
+<div class="overflow-hidden rounded-lg border border-border-light dark:border-border-dark">
+<table class="min-w-full divide-y divide-border-light dark:divide-border-dark">
+<thead class="bg-background-light dark:bg-background-dark">
+<tr>
+<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark" scope="col">Timestamp</th>
+<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark" scope="col">Metric</th>
+<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark" scope="col">Value</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-light bg-surface-light dark:divide-border-dark dark:bg-surface-dark">
+<tr>
+<td class="whitespace-nowrap px-4 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">2024-07-26 14:00:00</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm">Portfolio Value</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm">$1,000,000</td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-4 py-4 text-sm text-text-secondary-light dark:text-text-secondary-dark">2024-07-26 14:15:00</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm">Profit/Loss (24h)</td>
+<td class="whitespace-nowrap px-4 py-4 text-sm text-green-500">+$10,000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div>
+<h2 class="text-2xl font-semibold">Export &amp; Maintenance</h2>
+<div class="mt-4 flex flex-wrap gap-4">
+<button class="flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-medium text-white shadow-sm transition-opacity hover:opacity-90">
+<span class="material-symbols-outlined text-base"> download </span>
+<span>Export All Logs</span>
+</button>
+<button class="flex h-10 items-center justify-center gap-2 rounded-lg border border-border-light bg-surface-light px-4 text-sm font-medium transition-colors hover:bg-primary/10 dark:border-border-dark dark:bg-surface-dark dark:hover:bg-primary/20">
+<span class="material-symbols-outlined text-base"> assessment </span>
+<span>Generate System Report</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

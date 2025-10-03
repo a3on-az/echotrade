@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  echotrade:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: echotrade-bot
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+    env_file:
+      - .env
+    volumes:
+      # Mount logs directory for persistent logging
+      - ./logs:/app/logs
+      # Mount config for easy updates
+      - ./.env:/app/.env:ro
+    networks:
+      - echotrade-network
+    command: python main.py --paper --log-level INFO
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  echotrade-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: echotrade-dashboard
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs
+      - ./.env:/app/.env:ro
+    networks:
+      - echotrade-network
+    ports:
+      - "8050:8050"
+    command: python app.py
+    depends_on:
+      - echotrade
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8050"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Add a monitoring container
+  watchtower:
+    image: containrrr/watchtower
+    container_name: echotrade-watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_POLL_INTERVAL=86400  # Check for updates daily
+      - WATCHTOWER_CLEANUP=true
+    networks:
+      - echotrade-network
+    profiles:
+      - monitoring
+
+  # Optional: Log aggregation service
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.10.2
+    container_name: echotrade-filebeat
+    user: root
+    volumes:
+      - ./logs:/var/log/echotrade:ro
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - ELASTICSEARCH_HOST=localhost:9200
+    networks:
+      - echotrade-network
+    profiles:
+      - logging
+    depends_on:
+      - echotrade
+
+networks:
+  echotrade-network:
+    driver: bridge
+
+volumes:
+  echotrade-logs:
+    driver: local
